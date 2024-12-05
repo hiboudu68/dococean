@@ -1,5 +1,4 @@
 import React from "react";
-import "@/pages/styles/globals.css";
 
 export default function Home() {
   return (
