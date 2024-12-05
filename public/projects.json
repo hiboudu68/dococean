@@ -1,0 +1,89 @@
+[
+  {
+    "name": "Policloud",
+    "description": "Nuage de mots des thèmes majeurs, les idées dominantes, dans les messages de vœux de Nouvel An adressés aux Français par les présidents de la République chaque année.",
+    "tags": ["C#", "HTML", "CSS", "IUT"],
+    "git": "https://github.com/sabrina080802/Policloud",
+    "image": "/photo/NuageDeMots.png",
+    "pageLink": "/projet/Policloud"
+  },
+  {
+    "name": "MediatekFormation",
+    "description": "Site de formation en informatique, avec une gestion de l'administation",
+    "tags": ["PHP", "CSS", "CNED", "TWIG"],
+    "git": "https://github.com/sabrina080802/cnedProjet1",
+    "image": "/photo/MediatekFormation.png",
+    "pageLink": "/projet/MediatekFormation"
+  },
+  {
+    "name": "Mediatek86",
+    "description": "Application Windows qui gére la gestion d'une bibliothéque",
+    "tags": [".NET", "C#", "PHP", "Window Form", "CNED"],
+    "git": "https://github.com/sabrina080802/cnedProjet2",
+    "image": "/photo/Mediatek86.png",
+    "pageLink": "/projet/Mediatek86"
+  },
+  {
+    "name": "Le Jeu",
+    "description": "Un site web conçu pour rassembler les passionnés de jeux vidéo, facilitant l'organisation et la participation à des tournois collectifs.",
+    "tags": ["PHP", "C#", "JavaScript", "HTML", "Projet personnel", "CSS"],
+    "git": "https://github.com/sabrina080802/jeu",
+    "image": "/photo/LeJeu.webp",
+    "pageLink": "/projet/LeJeu"
+  },
+  {
+    "name": "Installation d'un poste pour développement",
+    "description": "Projet scolaire qui demander l'installation d'une VM",
+    "tags": ["OS", "DEBIAN", "IUT"],
+    "image": "/photo/debian.jpeg",
+    "pageLink": "/projet/Debian"
+  },
+  {
+    "name": "ProbPotes",
+    "description": "Application Créez des événements, ajoutez des dépenses, indiquez qui a payé et pour qui, puis générez des rapports pour savoir qui doit quoi à qui.",
+    "tags": ["C#", ".NET", "IUT"],
+    "git": "https://github.com/FranckG28/ProbPotes",
+    "image": "/photo/ProbPotes.webp",
+    "pageLink": "/projet/ProbPotes"
+  },
+  {
+    "name": "Espard",
+    "description": "Application  d'apprentissage de l'espagnol",
+    "tags": ["C#", ".NET", "IUT"],
+    "git": "https://github.com/sabrina080802/Espard",
+    "image": "/photo/Espagnol.webp",
+    "pageLink": "/projet/Espard"
+  },
+  {
+    "name": "Sabrina",
+    "description": "Mon site qui permet de montrer mes projets, mon expérience",
+    "tags": [
+      "NextJS",
+      "React",
+      "Projet personnel",
+      "CNED",
+      "TypeScript",
+      "JavaScript",
+      "CSS"
+    ],
+    "git": "https://github.com/sabrina080802/Portfolio",
+    "image": "/photo/Sabrina.png",
+    "pageLink": "/projet/Sabrina"
+  },
+  {
+    "name": "Ping-Pong",
+    "description": "Réalisation d'un jeu ping-pong avec des effets de particules",
+    "tags": ["Java", "IUT"],
+    "git": "https://github.com/sabrina080802/PingPong",
+    "image": "/photo/PingPong.webp",
+    "pageLink": "/projet/PingPong"
+  },
+  {
+    "name": "Magy",
+    "description": "Réalisation de mon propres framework",
+    "tags": ["JS", "HTML", "PHP", "C#", "CSS"],
+    "git": "https://github.com",
+    "image": "/photo/github.svg",
+    "pageLink": "/projet/Magy"
+  }
+]
