@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const PlayerPage = () => {
@@ -49,15 +50,17 @@ const PlayerPage = () => {
           alignItems: "center",
         }}
       >
-        <img
-          src="/photo/Logo.png"
-          alt="Logo"
-          style={{
-            width: "150px",
-            height: "150px",
-            objectFit: "contain",
-          }}
-        />
+        <Link href="/">
+          <img
+            src="/photo/Logo.png"
+            alt="Logo"
+            style={{
+              width: "150px",
+              height: "150px",
+              objectFit: "contain",
+            }}
+          />
+        </Link>
       </header>
 
       <div
