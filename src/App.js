@@ -7,6 +7,7 @@ import Play from "./pages/play";
 import Source from "./pages/source";
 import "./App.css";
 import "./assets/fonts.css";
+import CookieCauchemar from "./pages/CookieCauchemar";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/info" element={<Info />} />
         <Route path="/play" element={<Play />} />
         <Route path="/source" element={<Source />} />
+        <Route path="/cookieCauchemar" element={<CookieCauchemar />} />
       </Routes>
     </Router>
   );
