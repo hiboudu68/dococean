@@ -2,7 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/player/[name]": "pages/player/[name].js",
   "/": "pages/index.js",
-  "/play": "pages/play.js"
+  "/player/[name]": "pages/player/[name].js"
 }
