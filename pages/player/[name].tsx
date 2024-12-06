@@ -8,6 +8,12 @@ const PlayerPage = () => {
 
   const [playerImage, setPlayerImage] = useState<string>("");
 
+  const [spot1done, setSpot1done] = useState<boolean>(false);
+  const [spot2done, setSpot2done] = useState<boolean>(false);
+  const [spot3done, setSpot3done] = useState<boolean>(false);
+  const [spot4done, setSpot4done] = useState<boolean>(false);
+
+
   useEffect(() => {
     if (name) {
       if (name === "Sabrina") {
@@ -19,6 +25,21 @@ const PlayerPage = () => {
       }
     }
   }, [name]);
+
+  const handleClickSpot = (spot: string) => {
+    if(spot === 'spot1') {
+      setSpot1done(true);
+    }
+    if(spot === 'spot2') {
+      setSpot2done(true);
+    }
+    if(spot === 'spot3') {
+      setSpot3done(true);
+    }
+    if(spot === 'spot4') {
+      setSpot4done(true);
+    }
+  }
 
   return (
     <section
@@ -93,6 +114,70 @@ const PlayerPage = () => {
           />
         )}
       </div>
+      {!spot1done &&
+        <div
+          onClick={() => handleClickSpot('spot1')}
+          style={{
+            position: 'absolute',
+            top: '36%',
+            left: '49%',
+            width: '20px',
+            height: '20px',
+            backgroundColor: 'red',
+            borderRadius: '50%',
+            cursor: 'pointer',
+            filter: 'blur(2px)'
+          }}>
+        </div>
+      }
+      {!spot2done &&
+        <div
+          onClick={() => handleClickSpot('spot2')}
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '20px',
+            height: '20px',
+            backgroundColor: 'red',
+            borderRadius: '50%',
+            cursor: 'pointer',
+            filter: 'blur(2px)'
+          }}>
+        </div>
+      }
+      {!spot3done &&
+        <div
+          onClick={() => handleClickSpot('spot3')}
+          style={{
+            position: 'absolute',
+            top: '53%',
+            left: '48%',
+            width: '20px',
+            height: '20px',
+            backgroundColor: 'red',
+            borderRadius: '50%',
+            cursor: 'pointer',
+            filter: 'blur(2px)'
+          }}>
+        </div>
+      }
+      {!spot4done &&
+        <div
+          onClick={() => handleClickSpot('spot4')}
+          style={{
+            position: 'absolute',
+            top: '65%',
+            left: '48%',
+            width: '20px',
+            height: '20px',
+            backgroundColor: 'red',
+            borderRadius: '50%',
+            cursor: 'pointer',
+            filter: 'blur(2px)'
+          }}>
+        </div>
+      }
     </section>
   );
 };
