@@ -6,7 +6,6 @@ import React, {
   ForwardedRef,
 } from "react";
 
-import "./styles/globals.css";
 import { useRouter } from "next/router";
 
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
