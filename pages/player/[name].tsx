@@ -6,6 +6,7 @@ const PlayerPage = () => {
   const router = useRouter();
   const { name } = router.query;
 
+
   const [playerImage, setPlayerImage] = useState<string>("");
 
   useEffect(() => {
@@ -19,6 +20,11 @@ const PlayerPage = () => {
       }
     }
   }, [name]);
+
+  const handleClickSpot = (spot: string) => {
+    console.log(`Clicked on spot: ${spot}`);
+    // Handle spot click logic here
+  };
 
   return (
     <section
@@ -92,6 +98,46 @@ const PlayerPage = () => {
             }}
           />
         )}
+        <div
+        onClick={() => handleClickSpot('spot1')}
+          style={{
+            position: 'absolute',
+            top: '45%',
+            left: '50%',
+            width: '20px',
+            height: '20px',
+            backgroundColor: 'red',
+            borderRadius: '50%',
+            cursor: 'pointer',
+            filter: 'blur(2px)'
+          }}>
+        </div>
+        <div onClick={() => handleClickSpot('spot2')}
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '20px',
+            height: '20px',
+            backgroundColor: 'red',
+            borderRadius: '50%',
+            cursor: 'pointer',
+            filter: 'blur(2px)'
+          }}>
+        </div>
+        <div onClick={() => handleClickSpot('spot3')}
+          style={{
+            position: 'absolute',
+            top: '53%',
+            left: '49%',
+            width: '20px',
+            height: '20px',
+            backgroundColor: 'red',
+            borderRadius: '50%',
+            cursor: 'pointer',
+            filter: 'blur(2px)'
+          }}>
+        </div>
       </div>
     </section>
   );
