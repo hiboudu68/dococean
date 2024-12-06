@@ -21,6 +21,9 @@ export default function PlayersCarousel() {
       (prevIndex) => (prevIndex - 1 + players.length) % players.length
     );
   };
+  const handleValidation = () => {
+    router.push(`/player/${encodeURIComponent(players[currentIndex].name)}`);
+  };
 
   return (
     <section className="carousel-container">
@@ -43,7 +46,9 @@ export default function PlayersCarousel() {
           <button onClick={nextPlayer} className="arrow-button right" />
         </div>
 
-        <button className="validate-button">Valider</button>
+        <button onClick={handleValidation} className="validate-button">
+          Valider
+        </button>
       </div>
     </section>
   );
