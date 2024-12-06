@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'jolly-lodger';
+    src: url('/src/assets/jolly-lodger.regular.ttf') format('ttf');
+    font-weight: normal; /* ou bold si applicable */
+    font-style: normal;  /* ou italic si applicable */
+  }

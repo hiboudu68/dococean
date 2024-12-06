@@ -4,6 +4,10 @@ import Index from "./pages/index";
 import Settings from "./pages/Settings";
 import Info from "./pages/Info";
 import Play from "./pages/play";
+import logo from './logo.svg';
+import './App.css';
+import SpamClickkjndomp from './SpamClickkjndomp';
+import './assets/fonts.css';
 
 export default function App() {
   return (
