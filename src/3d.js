@@ -15,7 +15,7 @@ const ThreeScene = () => {
     mountRef.current.appendChild(renderer.domElement);
 
     // camera setup
-    // camera.position.set(10, 10, 30); 
+    // camera.position.set(6, 4, 6);
     // camera.lookAt(0, 0, 0);
 
     // light setup
@@ -62,48 +62,51 @@ const ThreeScene = () => {
     let trashModel, clawModel;
     let isGrabbing = false;
 
-    // first model : trash
-    loader.load(
-      '/models/milkJug.glb',
-      (gltf) => {
-        trashModel = gltf.scene;
-        trashModel.position.set(0, 0, 0); // on the ground
-        scene.add(trashModel);
-
-        // creating a physics body for the model
-        trashBody = new CANNON.Body({
-          mass: 1,
-          shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)),
-          position: new CANNON.Vec3(0, 5, 0),
-        });
-        world.addBody(trashBody);
-
-        // create a BoxHelper to outline the trash body
-        trashBoxHelper = new THREE.BoxHelper(trashModel, 0x00ff00); // green box for trash
-        scene.add(trashBoxHelper);
-
-        const animate = () => {
-          requestAnimationFrame(animate);
-
-          world.step(1 / 60); // update physics world : this is the physics engine's tick
-
-          // sync the model's position and rotation with the physics body
-          trashModel.position.copy(trashBody.position);
-          trashModel.quaternion.copy(trashBody.quaternion);
-
-          // sync the BoxHelper's position and rotation with the model
-          trashBoxHelper.update();
-
-          renderer.render(scene, camera);
-        };
-
-        animate();
-      },
-      undefined,
-      (error) => {
-        console.error('Error loading model:', error);
-      }
-    );
+      // first model : trash
+      loader.load(
+        '/models/milkJug.glb',
+        (gltf) => {
+          trashModel = gltf.scene;
+          trashModel.position.set(0, 0, 0); // on the ground
+          scene.add(trashModel);
+  
+          // creating a physics body for the model
+          trashBody = new CANNON.Body({
+            mass: 1,
+            shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)),
+            position: new CANNON.Vec3(0, 0, 0),
+          });
+          world.addBody(trashBody);
+  
+          // create a BoxHelper to outline the trash body
+          trashBoxHelper = new THREE.BoxHelper(trashModel, 0x00ff00); // green box for trash
+          scene.add(trashBoxHelper);
+  
+          const animate = () => {
+            requestAnimationFrame(animate);
+  
+            world.step(1 / 60); // update physics world : this is the physics engine's tick
+  
+            // sync the model's position and rotation with the physics body
+            trashModel.position.copy(trashBody.position);
+            trashModel.quaternion.copy(trashBody.quaternion);
+  
+            // sync the BoxHelper's position and rotation with the model
+            trashBoxHelper.update();
+  
+            renderer.render(scene, camera);
+          };
+  
+          animate();
+        },
+        undefined,
+        (error) => {
+          console.error('Error loading model:', error);
+        }
+      );
+  
+    
+    
 
     // second model : claw
     loader.load(
@@ -117,7 +120,7 @@ const ThreeScene = () => {
         clawBody = new CANNON.Body({
           mass: 0, 
           shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)), 
-          position: new CANNON.Vec3(0, 10, 0),
+          position: new CANNON.Vec3(0, 5, 0),
         });
         world.addBody(clawBody);
 
@@ -149,8 +152,8 @@ const ThreeScene = () => {
      const keyState = {};
      window.addEventListener('keydown', (event) => {
        keyState[event.code] = true;
-
-        if (event.code === 'KeyG') {
+        
+        if (event.code === 'KeyG' && trashBody.position.distanceTo(clawBody.position) < 1) { // ONLY when the hand is close to the trash !!!!!! 
           isGrabbing = true;
         }
      });
@@ -164,6 +167,8 @@ const ThreeScene = () => {
      
      const moveHand = () => {
       if (clawBody) {
+        if(clawBody.position.y < 1) clawBody.position.y = 1; // don't let the claw go below the ground
+
         // apply user input to clawBody (physics body), NOT the clawModel (visual model)
         if (keyState['ArrowUp']) clawBody.position.z -= 0.1; // forward
         if (keyState['ArrowDown']) clawBody.position.z += 0.1; // backward
@@ -214,7 +219,7 @@ const ThreeScene = () => {
     };
     
     update();
-    camera.position.set(0, 5, 10);
+    camera.position.set(0, 3, 7);
    
     return () => {
       mountRef.current.removeChild(renderer.domElement);
