@@ -64,7 +64,7 @@ const ThreeScene = () => {
 
     // first model : trash
     loader.load(
-      '/models/oil.glb',
+      '/models/milkJug.glb',
       (gltf) => {
         trashModel = gltf.scene;
         trashModel.position.set(0, 0, 0); // on the ground
