@@ -132,7 +132,7 @@ export default function Source() {
       {cgu && (
         <div className="source-content">
           <h1 className="source-title">
-            Conditions Générales d’Utilisation (CGU)
+            Conditions Générales d'Utilisation (CGU)
           </h1>
           <p className="source-date">Dernière mise à jour : 6 décembre 2024</p>
           <p className="source-description">
@@ -152,7 +152,7 @@ export default function Source() {
               doivent être accompagnés.
             </li>
             <li>
-              <strong>Conditions d’utilisation :</strong> Utilisation
+              <strong>Conditions d'utilisation :</strong> Utilisation
               personnelle et respect des lois.
             </li>
             <li>
