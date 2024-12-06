@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Maze from "../../src/Maze/Maze";
+import ThreeScene from "../../src/3d"
 
 const PlayerPage = () => {
   const router = useRouter();
@@ -57,7 +58,10 @@ const PlayerPage = () => {
       setSpot3playing(false);
     }
     if (spot === 'spot4') {
-      setSpot4done(true);
+      if(victory === 'victory'){
+        setSpot4done(true);
+        setLevelDone(levelDone + 1);
+      }
       setSpot4playing(false);
     }
     setCurrentBg(defaultBg);
@@ -105,10 +109,8 @@ const PlayerPage = () => {
       }}
 
     >
-      {!spot1playing &&
+      {!playing &&
         <div>
-
-
           <header
             style={{
               position: "absolute",
@@ -239,6 +241,8 @@ const PlayerPage = () => {
           }
         </div>}
       {spot1playing && <Maze onWin={handleSpotWin} />
+      }
+      {spot4playing && <ThreeScene onWin={handleSpotWin} />
       }
     </section>
   );
