@@ -1,20 +1,9 @@
-import "./styles/globals.css";
-import { AppProps } from "next/app";
-import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
+import React from "react";
+import Home from "../pages/index";
+import Settings from "../pages/settings";
+import Info from "../pages/info";
+import "@/pages/styles/globals.css";
 
-const NoSSRWrapper = dynamic(() => import("./layout"), {
-  ssr: false,
-});
-
-function Portfolio({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-
-  return (
-    <NoSSRWrapper>
-      <Component {...pageProps} />
-    </NoSSRWrapper>
-  );
+export default function App({ Component, pageProps }: any) {
+  return <Component {...pageProps} />;
 }
-
-export default Portfolio;
