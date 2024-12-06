@@ -12,12 +12,26 @@ const ThreeScene = () => {
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true; // Enable shadow maps
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
     mountRef.current.appendChild(renderer.domElement);
 
     // light setup
     const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(-1, 2, 4);
+    light.position.set(0, 10, 0); // top light
+    light.castShadow = true; // Enable shadows for this light
+    light.shadow.camera.left = -50;
+    light.shadow.camera.right = 50;
+    light.shadow.camera.top = 50;
+    light.shadow.camera.bottom = -50;
+    light.shadow.camera.near = 0.5;
+    light.shadow.camera.far = 100;
+    light.shadow.mapSize.width = 1024;
+    light.shadow.mapSize.height = 1024;
     scene.add(light);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); // strong white light
+    scene.add(ambientLight);
 
     // physics setup
     const world = new CANNON.World();
@@ -40,11 +54,11 @@ const ThreeScene = () => {
 
     const groundMaterial = new THREE.MeshStandardMaterial({
       map: groundTexture,
-      side: THREE.DoubleSide,
     });
 
     const groundGeometry = new THREE.PlaneGeometry(1000, 1000); // large dimensions
     const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
+    groundMesh.receiveShadow = true; // Ground receives shadows
     groundMesh.rotation.x = -Math.PI / 2;
     scene.add(groundMesh);
 
@@ -58,9 +72,8 @@ const ThreeScene = () => {
     let isGrabbing = false;
     let isTrashRemoved = false; // flag to track if trash is removed
 
-
     /* 
-      THIS IS VERY MESSY CODE.
+      THIS IS SOME VERY MESSY CODE.
     */
 
     // Load trash model
@@ -80,9 +93,9 @@ const ThreeScene = () => {
         });
         world.addBody(trashBody);
 
-        // create a BoxHelper to outline the trash model
-        trashBoxHelper = new THREE.BoxHelper(trashModel, 0x00ff00); // green box
-        scene.add(trashBoxHelper);
+        trashModel.traverse((node) => {
+          if (node.isMesh) node.castShadow = true;
+        });
       },
       undefined,
       (error) => {
@@ -95,7 +108,7 @@ const ThreeScene = () => {
       '/models/claw.glb',
       (gltf) => {
         clawModel = gltf.scene;
-        clawModel.position.set(5, 7, 0);
+        clawModel.position.set(0, 7, 0);
         clawModel.scale.set(0.1, 0.1, 0.1);
         scene.add(clawModel);
 
@@ -103,13 +116,13 @@ const ThreeScene = () => {
         clawBody = new CANNON.Body({
           mass: 0, // static body
           shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1)),
-          position: new CANNON.Vec3(5, 7, 0),
+          position: new CANNON.Vec3(0, 7, 0),
         });
         world.addBody(clawBody);
 
-        // create a BoxHelper for the claw's body
-        clawBoxHelper = new THREE.BoxHelper(clawModel, 0xff0000); // red box
-        scene.add(clawBoxHelper);
+        clawModel.traverse((node) => {
+          if (node.isMesh) node.castShadow = true;
+        });
       },
       undefined,
       (error) => {
@@ -134,9 +147,9 @@ const ThreeScene = () => {
         });
         world.addBody(trashCanBody);
 
-        // create a BoxHelper for the trash can's body
-        trashCanBoxHelper = new THREE.BoxHelper(trashCanModel, 0xffff00); // yellow box
-        scene.add(trashCanBoxHelper);
+        trashCanModel.traverse((node) => {
+          if (node.isMesh) node.castShadow = true;
+        });
       },
       undefined,
       (error) => {
@@ -208,7 +221,7 @@ const ThreeScene = () => {
         if (keyState['Space']) clawBody.position.y -= 0.1; // down
         if (keyState['ShiftLeft']) clawBody.position.y += 0.1; // up
       }
-    };
+    };    
 
     // called once per frame
     const update = () => {
