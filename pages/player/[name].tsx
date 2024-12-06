@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Maze from "../../src/Maze/Maze";
+import Maze1 from "../../src/Maze1/Maze";
 import ThreeScene from "../../src/3d"
 import SpamClickkjndomp from "../../src/SpamClickkjndomp";
 
@@ -51,11 +52,15 @@ const PlayerPage = () => {
       setSpot1playing(false);
     }
     if (spot === 'spot2') {
-      setSpot2done(true);
+      if (victory === 'victory') {
+        setSpot2done(true);
+        setLevelDone(levelDone + 1);
+      }
       setSpot2playing(false);
     }
+
     if (spot === 'spot3') {
-      if(victory === 'victory'){
+      if (victory === 'victory') {
         setSpot3done(true);
         setLevelDone(levelDone + 1);
       }
@@ -63,7 +68,7 @@ const PlayerPage = () => {
 
     }
     if (spot === 'spot4') {
-      if(victory === 'victory'){
+      if (victory === 'victory') {
         setSpot4done(true);
         setLevelDone(levelDone + 1);
       }
@@ -83,14 +88,17 @@ const PlayerPage = () => {
     if (spot === 'spot2') {
       setPlaying(true);
       setSpot2playing(true);
+      setCurrentBg("url('/photo/coeur.png')");
     }
     if (spot === 'spot3') {
       setPlaying(true);
       setSpot3playing(true);
     }
     if (spot === 'spot4') {
-      setPlaying(true);
-      setSpot4playing(true);
+      if (spot1done && spot2done && spot3done) {
+        setPlaying(true);
+        setSpot4playing(true);
+      }
     }
   }
 
@@ -240,14 +248,33 @@ const PlayerPage = () => {
                 backgroundColor: 'red',
                 borderRadius: '50%',
                 cursor: 'pointer',
-                filter: 'blur(2px)'
+                filter: 'blur(2px)',
+                zIndex: 9
               }}>
             </div>
+          }
+          {
+            (!spot1done || !spot2done || !spot3done) &&
+            <div
+              style={{
+                position: 'absolute',
+                top: '36%',
+                left: '49%',
+                width: '20px',
+                height: '20px',
+                backgroundColor: 'blue',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                filter: 'blur(2px)',
+                zIndex: 10
+              }}/>
           }
         </div>}
       {spot1playing && <Maze onWin={handleSpotWin} />
       }
-      {spot3playing && <SpamClickkjndomp onWin={handleSpotWin}/>}
+      {spot2playing && <Maze1 onWin={handleSpotWin} />
+      }
+      {spot3playing && <SpamClickkjndomp onWin={handleSpotWin} />}
       {spot4playing && <ThreeScene onWin={handleSpotWin} />
       }
     </section>

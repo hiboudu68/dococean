@@ -15,15 +15,15 @@ const Maze1 = ({ onWin }) => {
   }
 
   const Win = () => {
-    onWin("spot3", "victory");
+    onWin("spot2", "victory");
   }
 
   const handleHome = () => {
-    onWin("spot3", "looser");
+    onWin("spot2", "looser");
   }
 
   return (
-    <div className="maze_game one">
+    <div className="maze_game">
       {!started &&
         <div className="container_start">
           <button onClick={handleStart}>Clique moi</button>
@@ -32,34 +32,37 @@ const Maze1 = ({ onWin }) => {
             <h2>Va sauver le poisson qui est coincé dans le labyrinthe !</h2>
             <h2>Pour cela, ne touche pas les murs de déchets !</h2>
             <h2>Lors du clique, attend avant de bouger ta souris.</h2>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <article>
               <header>
-                <h1>La Vessie des Océans : Attention à la Montée des Eaux ! 💧🌊</h1>
+                <h1>Le Cœur et les Vaisseaux des Océans : Les Courants Marins, Battements de Vie ! ❤️🌊</h1>
               </header>
               <section>
                 <p>
-                  Imagine que ta vessie déborde et que tu n’arrives plus à la contrôler : ça peut vite devenir un gros problème !
-                  Pour les océans, c’est un peu la même chose avec la montée des eaux. Les océans se comportent comme une immense vessie qui, avec le réchauffement climatique, déborde de plus en plus à cause de la fonte des glaces et de l’expansion de l’eau chaude. 🧊🌡️
+                  Imagine que ton cœur et tes vaisseaux sanguins s’arrêtent de fonctionner : ton corps ne pourrait plus vivre.
+                  Pour les océans, leur système circulatoire, ce sont les courants marins ! Ces immenses mouvements d’eau chaude et froide
+                  agissent comme un réseau de vaisseaux, transportant la chaleur, l’oxygène et les nutriments, un peu comme ton sang transporte ce dont ton corps a besoin pour fonctionner. 🌍🌬️
                 </p>
               </section>
               <section>
                 <p>
-                  Quand l’eau monte, elle envahit les terres, mettant en danger des millions de personnes vivant près des côtes.
-                  Les plages disparaissent, les maisons sont inondées, et même des îles entières risquent de se retrouver sous l’eau. 🏝️💔
+                  Le cœur des océans, c’est le mélange subtil entre les eaux chaudes des tropiques et les eaux froides des pôles.
+                  Ces courants permettent de maintenir un équilibre vital pour la planète : ils régulent le climat, nourrissent la vie marine
+                  et influencent même les saisons. 🐋✨
                 </p>
               </section>
               <section>
                 <p>
-                  Et ce n’est pas tout : la montée des eaux perturbe aussi les écosystèmes marins. Certaines espèces perdent leurs habitats,
-                  et les écosystèmes côtiers, comme les mangroves et les coraux, peinent à s’adapter. 🐠🌊
+                  Mais aujourd’hui, ce « cœur océanique » est en danger. Avec le réchauffement climatique, les glaciers fondent
+                  et libèrent de grandes quantités d’eau douce, perturbant ces courants. Résultat ? Certaines zones deviennent trop chaudes,
+                  d’autres trop froides, et la planète tout entière est déséquilibrée. 🌡️❄️
                 </p>
               </section>
               <footer>
                 <p>
-                  Mais bonne nouvelle : on peut limiter cette montée en réduisant les émissions de gaz à effet de serre et en protégeant nos océans.
-                  Parce que, tout comme ta vessie, il vaut mieux éviter de surcharger les océans pour garder la planète en équilibre ! 💙💧
+                  Si les courants marins ralentissent ou s’arrêtent, c’est comme si le cœur des océans cessait de battre : c’est la vie sur Terre qui serait menacée.
+                  Alors, protégeons notre planète pour que ce système circulatoire continue de pomper l’équilibre et la vie dans nos océans et au-delà ! ❤️🌊
                 </p>
               </footer>
             </article>
@@ -67,7 +70,7 @@ const Maze1 = ({ onWin }) => {
         </div>
       }
       {started &&
-        <div className="container_maze" onMouseLeave={handleCollision}>
+        <div className="container_maze one" onMouseLeave={handleCollision}>
           <div className="wall zero" onMouseEnter={handleCollision}></div>
           <div className="wall one" onMouseEnter={handleCollision}></div>
           <div className="wall two" onMouseEnter={handleCollision}></div>
