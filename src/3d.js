@@ -34,38 +34,53 @@ const ThreeScene = () => {
     groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0); // horizontal plane (like real life)
     world.addBody(groundBody);
 
-    // ground plane for Three.js
-    const groundGeometry = new THREE.PlaneGeometry(10, 10);
-    const groundMaterial = new THREE.MeshBasicMaterial({ color: 0x999999, side: THREE.DoubleSide }); // side means both sides are visible (front and back) but we only see one side
+    // ground texture
+    const textureLoader = new THREE.TextureLoader();
+    const groundTexture = textureLoader.load('/models/waves.jpg');
+    groundTexture.wrapS = THREE.RepeatWrapping;
+    groundTexture.wrapT = THREE.RepeatWrapping;
+    groundTexture.repeat.set(100, 100); // repeats the texture to create an "infinite" effect
+
+    // create the ground material using the texture
+    const groundMaterial = new THREE.MeshStandardMaterial({
+      map: groundTexture,
+      side: THREE.DoubleSide, // Both sides visible
+    });
+
+    // use a large plane for the ground
+    const groundGeometry = new THREE.PlaneGeometry(1000, 1000); // Large dimensions to simulate infinity
     const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
-    groundMesh.rotation.x = -Math.PI / 2; // horizontal plane (like real life)
+    groundMesh.rotation.x = -Math.PI / 2; // Horizontal orientation
     scene.add(groundMesh);
+
+    scene.background = new THREE.Color(0x87ceeb); // sky blue
 
     // load models
     const loader = new GLTFLoader();
-    let heartBody, pliersBody;
-    let heartBoxHelper, pliersBoxHelper; 
-    let heartModel, pliersModel;
+    let trashBody, clawBody;
+    let trashBoxHelper, clawBoxHelper; 
+    let trashModel, clawModel;
     let isGrabbing = false;
 
-    // first model : heart
+    // first model : trash
     loader.load(
-      '/models/heart.glb',
+      '/models/oil.glb',
       (gltf) => {
-        heartModel = gltf.scene;
-        scene.add(heartModel);
+        trashModel = gltf.scene;
+        trashModel.position.set(0, 0, 0); // on the ground
+        scene.add(trashModel);
 
         // creating a physics body for the model
-        heartBody = new CANNON.Body({
+        trashBody = new CANNON.Body({
           mass: 1,
-          shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)), 
+          shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)),
           position: new CANNON.Vec3(0, 5, 0),
         });
-        world.addBody(heartBody);
+        world.addBody(trashBody);
 
-        // create a BoxHelper to outline the heart body
-        heartBoxHelper = new THREE.BoxHelper(heartModel, 0x00ff00); // green box for heart
-        scene.add(heartBoxHelper);
+        // create a BoxHelper to outline the trash body
+        trashBoxHelper = new THREE.BoxHelper(trashModel, 0x00ff00); // green box for trash
+        scene.add(trashBoxHelper);
 
         const animate = () => {
           requestAnimationFrame(animate);
@@ -73,11 +88,11 @@ const ThreeScene = () => {
           world.step(1 / 60); // update physics world : this is the physics engine's tick
 
           // sync the model's position and rotation with the physics body
-          heartModel.position.copy(heartBody.position);
-          heartModel.quaternion.copy(heartBody.quaternion);
+          trashModel.position.copy(trashBody.position);
+          trashModel.quaternion.copy(trashBody.quaternion);
 
           // sync the BoxHelper's position and rotation with the model
-          heartBoxHelper.update();
+          trashBoxHelper.update();
 
           renderer.render(scene, camera);
         };
@@ -90,55 +105,39 @@ const ThreeScene = () => {
       }
     );
 
-    // second model : medical pliers
+    // second model : claw
     loader.load(
       'models/heart.glb',
       (gltf) => {
-        pliersModel = gltf.scene;
-        pliersModel.position.set(0, 10, 0); // above the ground
-        scene.add(pliersModel);
+        clawModel = gltf.scene;
+        clawModel.position.set(0, 10, 0); // above the ground
+        scene.add(clawModel);
 
         // creating a physics body for the model
-        pliersBody = new CANNON.Body({
+        clawBody = new CANNON.Body({
           mass: 0, 
           shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)), 
           position: new CANNON.Vec3(0, 10, 0),
         });
-        world.addBody(pliersBody);
+        world.addBody(clawBody);
 
-        // create a BoxHelper to outline the pliers body
-        pliersBoxHelper = new THREE.BoxHelper(pliersModel, 0xff0000); // red box for pliers
-        scene.add(pliersBoxHelper);
+        // create a BoxHelper to outline the claw's body
+        clawBoxHelper = new THREE.BoxHelper(clawModel, 0xff0000); // red box for claw
+        scene.add(clawBoxHelper);
 
         const animate = () => {
-          // make the pliers completely static (not affected by gravity)
-          // pliersBody.position.set(0, 10, 0);
-          // pliersBody.velocity.set(0, 0, 0);
-          // pliersBody.angularVelocity.set(0, 0, 0);
-
           requestAnimationFrame(animate);
 
           world.step(1 / 60); 
 
-          pliersModel.position.copy(pliersBody.position);
-          pliersModel.quaternion.copy(pliersBody.quaternion);
-          pliersBoxHelper.update();
+          clawModel.position.copy(clawBody.position);
+          clawModel.quaternion.copy(clawBody.quaternion);
+          clawBoxHelper.update();
 
           renderer.render(scene, camera);
         };
 
         animate();
-
-        // world.addEventListener('postStep', () => {
-        //   if (heartBody && pliersBody) {
-        //     if (heartBody.position.distanceTo(pliersBody.position) < 1 && isGrabbing) {
-        //       // heartbody follows pliersbody, as if the pliers are picking up the heart
-        //       // dont copy the position directly, but set it to a point slightly below the pliers
-        //       heartBody.position.copy(pliersBody.position);
-        //       heartBody.position.y -= 1;
-        //     }
-        //   }
-        // });
       },
       undefined,
       (error) => {
@@ -164,14 +163,14 @@ const ThreeScene = () => {
      });
      
      const moveHand = () => {
-      if (pliersBody) {
-        // apply user input to pliersBody (physics body), NOT the pliersModel
-        if (keyState['ArrowUp']) pliersBody.position.z -= 0.1; // forward
-        if (keyState['ArrowDown']) pliersBody.position.z += 0.1; // backward
-        if (keyState['ArrowLeft']) pliersBody.position.x -= 0.1; // left
-        if (keyState['ArrowRight']) pliersBody.position.x += 0.1; // right
-        if (keyState['Space']) pliersBody.position.y -= 0.1; // down
-        if (keyState['ShiftLeft']) pliersBody.position.y += 0.1; // up
+      if (clawBody) {
+        // apply user input to clawBody (physics body), NOT the clawModel (visual model)
+        if (keyState['ArrowUp']) clawBody.position.z -= 0.1; // forward
+        if (keyState['ArrowDown']) clawBody.position.z += 0.1; // backward
+        if (keyState['ArrowLeft']) clawBody.position.x -= 0.1; // left
+        if (keyState['ArrowRight']) clawBody.position.x += 0.1; // right
+        if (keyState['Space']) clawBody.position.y -= 0.1; // down
+        if (keyState['ShiftLeft']) clawBody.position.y += 0.1; // up
       }
     };
 
@@ -180,38 +179,36 @@ const ThreeScene = () => {
       requestAnimationFrame(update);
       moveHand();
 
-      if(isGrabbing && heartBody && pliersBody) {
-        heartBody.position.copy(pliersBody.position);
+      if(isGrabbing && trashBody && clawBody) {
+        trashBody.position.copy(clawBody.position);
         
         if(isGrabbing) {
-          heartBody.position.y -= 1;
-          heartBody.velocity.set(0, 0, 0);
-          heartBody.angularVelocity.set(0, 0, 0);
+          trashBody.position.y -= 1;
+          trashBody.velocity.set(0, 0, 0);
+          trashBody.angularVelocity.set(0, 0, 0);
         }
       }
 
-      // sync the heart model's position and rotation with the physics body
-      if (heartModel && heartBody) {
-        heartModel.position.copy(heartBody.position);
-        heartModel.quaternion.copy(heartBody.quaternion);
+      // sync the trash model's position and rotation with the physics body
+      if (trashModel && trashBody) {
+        trashModel.position.copy(trashBody.position);
+        trashModel.quaternion.copy(trashBody.quaternion);
 
         // update the BoxHelper to match the physics body
-        heartBoxHelper.update();
+        trashBoxHelper.update();
       }
 
-      // sync the pliers model's position and rotation with the physics body
-      if (pliersModel && pliersBody) {
-        pliersModel.position.copy(pliersBody.position);
-        pliersModel.quaternion.copy(pliersBody.quaternion);
+      // sync the claw model's position and rotation with the physics body
+      if (clawModel && clawBody) {
+        clawModel.position.copy(clawBody.position);
+        clawModel.quaternion.copy(clawBody.quaternion);
 
         // update the BoxHelper to match the physics body
-        pliersBoxHelper.update();
+        clawBoxHelper.update();
       }
 
       // also update the physics world
       world.step(1 / 60);
-
-
 
       renderer.render(scene, camera);
     };
