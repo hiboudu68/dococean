@@ -60,7 +60,9 @@ export default function Home() {
       </div>
 
       <div className="play-button-container">
-        <button className="play-button">Play</button>
+        <button className="play-button" onClick={() => router.push("/play")}>
+          Play
+        </button>
       </div>
     </section>
   );
