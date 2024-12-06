@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Maze from "../../src/Maze/Maze";
+import ThreeScene from "../../src/3d"
+import SpamClickkjndomp from "../../src/SpamClickkjndomp";
 
 const PlayerPage = () => {
   const router = useRouter();
@@ -53,11 +55,18 @@ const PlayerPage = () => {
       setSpot2playing(false);
     }
     if (spot === 'spot3') {
-      setSpot3done(true);
+      if(victory === 'victory'){
+        setSpot3done(true);
+        setLevelDone(levelDone + 1);
+      }
       setSpot3playing(false);
+
     }
     if (spot === 'spot4') {
-      setSpot4done(true);
+      if(victory === 'victory'){
+        setSpot4done(true);
+        setLevelDone(levelDone + 1);
+      }
       setSpot4playing(false);
     }
     setCurrentBg(defaultBg);
@@ -105,10 +114,8 @@ const PlayerPage = () => {
       }}
 
     >
-      {!spot1playing &&
+      {!playing &&
         <div>
-
-
           <header
             style={{
               position: "absolute",
@@ -239,6 +246,9 @@ const PlayerPage = () => {
           }
         </div>}
       {spot1playing && <Maze onWin={handleSpotWin} />
+      }
+      {spot3playing && <SpamClickkjndomp onWin={handleSpotWin}/>}
+      {spot4playing && <ThreeScene onWin={handleSpotWin} />
       }
     </section>
   );

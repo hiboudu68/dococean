@@ -772,11 +772,11 @@ body {
   top: 40%;
   left: 35%;
   width: 12%;
-  height: 8%;
+  height: 12%;
   background-color: #f0f0f0;
   border: 1px solid #000;
   transition: all 1.5s;
-  animation: travel 0.5s infinite;
+  animation: travel 0.8s infinite;
 }
 
 @keyframes travel{
@@ -880,3 +880,16 @@ body {
   transition: left 0.3s ease;
   z-index: 1;
 }
+
+.pbatterie{
+  background-image: url("../../public/photo/battery.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.gbatterie{
+  background-image: url("../../public/photo/batterie-grosse.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
