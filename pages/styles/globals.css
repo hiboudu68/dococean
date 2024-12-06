@@ -306,6 +306,121 @@ body {
   margin-bottom: 20px;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
+.source-page {
+  font-family: "Arial", sans-serif;
+  background-image: url("/photo/setting.png");
+  background-size: cover;
+  min-height: 100vh;
+  padding: 40px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.source-button,
+.source-back-button,
+.source-home-button,
+.source-revenir-credits-button {
+  background-color: #ffde0a;
+  color: black;
+  border-radius: 5px;
+  border: 3px solid #fcca01;
+  padding: 15px 30px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.source-button:hover,
+.source-back-button:hover,
+.source-home-button:hover,
+.source-revenir-credits-button:hover {
+  background-color: #fcca01;
+}
+
+.source-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.source-content {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 40px;
+  border-radius: 10px;
+  max-width: 800px;
+  margin: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.source-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.source-date,
+.source-footer,
+.source-description,
+.source-paragraph {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.source-subtitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.source-list,
+.source-credits,
+.source-credits-list {
+  list-style-type: none;
+  padding: 0;
+  margin-left: 20px;
+}
+
+.source-credits-list li,
+.source-list li {
+  margin-bottom: 10px;
+}
+
+.source-credits a {
+  color: #ffde0a;
+  text-decoration: none;
+}
+
+.source-credits a:hover {
+  text-decoration: underline;
+}
+
+.source-home-button-fixed {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 30px;
+  background-color: #ffde0a;
+  color: black;
+  border-radius: 5px;
+  border: 3px solid #fcca01;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.source-home-button-fixed:hover {
+  background-color: #fcca01;
+}
+
+.source-navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+}
 
 
 .wall{

@@ -56,6 +56,22 @@ export default function Home() {
             style={{ width: "40px", height: "40px" }}
           />
         </button>
+
+        <button
+          onClick={() => router.push("/source")} // Utiliser router.push() pour naviguer
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+          }}
+          title="Infos"
+        >
+          <img
+            src="/photo/carotte.png"
+            alt="Infos"
+            style={{ width: "40px", height: "40px" }}
+          />
+        </button>
       </div>
 
       <div className="play-button-container">
