@@ -71,6 +71,7 @@ const PlayerPage = () => {
       if (victory === 'victory') {
         setSpot4done(true);
         setLevelDone(levelDone + 1);
+        alert("Bravo vous avez fini le jeu !");
       }
       setSpot4playing(false);
     }
