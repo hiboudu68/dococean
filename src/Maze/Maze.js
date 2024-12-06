@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Maze.css";
 
 const Maze = () => {
@@ -10,6 +10,8 @@ const Maze = () => {
     setGameOver(true);
   };
 
+
+
   const handleStart = () => {
     setStarted(true);
   }
@@ -18,12 +20,21 @@ const Maze = () => {
     alert("You win!");
   }
 
+  const handleHome = () => {
+    alert("You left!");
+  }
+
   return (
     <div className="maze_game">
       {!started &&
         <div className="container_start">
           <button onClick={handleStart}>Clique moi</button>
-          <h1>Echape le labyrinthe</h1>
+          <div class="instructions">
+            <h1>Bloup bloup***</h1>
+            <h2>Va sauver le poisson qui est coincé dans le labyrinthe !</h2>
+            <h2>Pour cela, ne touche pas les murs de déchets !</h2>
+            <h2>Lors du clique, attend avant de bouger ta souris.</h2>
+          </div>
         </div>
       }
       {started &&
@@ -45,7 +56,9 @@ const Maze = () => {
           <div className="finish" onMouseEnter={Win}></div>
           {gameOver && (
             <div className="screamer">
-              You Lose
+              <h1>Tu as perdu :|</h1>
+              <img src={require("../assets/fish-turn-cursed.gif")} alt="You Lose" />
+              <button className="btn_home" onClick={handleHome}>Retour en arrière</button>
             </div>
           )}
         </div>
