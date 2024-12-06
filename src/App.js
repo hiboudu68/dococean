@@ -4,10 +4,9 @@ import Index from "./pages/index";
 import Settings from "./pages/Settings";
 import Info from "./pages/Info";
 import Play from "./pages/play";
-import logo from './logo.svg';
-import './App.css';
-import SpamClickkjndomp from './SpamClickkjndomp';
-import './assets/fonts.css';
+import Source from "./pages/source";
+import "./App.css";
+import "./assets/fonts.css";
 
 export default function App() {
   return (
@@ -17,6 +16,7 @@ export default function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/info" element={<Info />} />
         <Route path="/play" element={<Play />} />
+        <Route path="/source" element={<Source />} />
       </Routes>
     </Router>
   );

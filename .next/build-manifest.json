@@ -31,25 +31,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/info": [
+    "/source": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/info.js"
-    ],
-    "/play": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/play.js"
-    ],
-    "/player/[name]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/player/[name].js"
-    ],
-    "/settings": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/settings.js"
+      "static/chunks/pages/source.js"
     ]
   },
   "ampFirstPages": []
