@@ -16,7 +16,7 @@ function SpamClickkjndomp({ onWin }) {
     return (
         
         <div style={{ height: '100vh', backgroundColor: '#55AAC9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            {isPlaying && 
+            {!isPlaying && 
             <>
             <article>
                 <header>
@@ -51,7 +51,7 @@ function SpamClickkjndomp({ onWin }) {
             <button onClick={() => setIsPlaying(true)}>Spam Click</button>
             </>
             }
-            {!isPlaying &&
+            {isPlaying &&
             <>
             <h1 style={{fontFamily: 'Jolly Lodger, sans-serif', fontSize: '50px'}}>Enlever les batteries</h1>
             <div style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
