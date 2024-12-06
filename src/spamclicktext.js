@@ -1,23 +1,9 @@
-import coeur from "./assets/heart.png";
-import ClickImg from "./ClickImgmlkpdsjsj";
-import React, { useState } from "react";
+import SpamClickkjndomp from "./SpamClickkjndomp";
 
-function SpamClickkjndomp({ onWin }) {
-    const [nbBatteryLeft, setNbBatteryLeft] = useState(3);
-    const [isPlaying, setIsPlaying] = useState(false);
-
-    const handleEnd = () => {
-        setNbBatteryLeft(nbBatteryLeft - 1);
-        if (nbBatteryLeft === 1) {
-            onWin("spot3", "victory");
-        }
-    }
+function spamclicktext() {
 
     return (
-        
-        <div style={{ height: '100vh', backgroundColor: '#55AAC9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            {isPlaying && 
-            <>
+        <div>
             <article>
                 <header>
                     <h1>Les Phytoplanctons : Les Poumons Cachés de la Planète ! 🌊🌿</h1>
@@ -48,22 +34,9 @@ function SpamClickkjndomp({ onWin }) {
                     </p>
                 </footer>
             </article>
-            <button onClick={() => setIsPlaying(true)}>Spam Click</button>
-            </>
-            }
-            {!isPlaying &&
-            <>
-            <h1 style={{fontFamily: 'Jolly Lodger, sans-serif', fontSize: '50px'}}>Enlever les batteries</h1>
-            <div style={{ display: "flex", alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ position: "relative", backgroundImage: `url(${coeur})`, width: '1700px', height: '900px', backgroundSize: 'cover', display: "flex", flexDirection: "row" }}>
-                    <ClickImg img={"gbatterie"} width={400} top={'50%'} left={'60%'} onEnd={handleEnd}/>
-                    <ClickImg img={"pbatterie"} width={300} top={'65%'} left={'40%'} onEnd={handleEnd}/>
-                    <ClickImg img={"gbatterie"} width={200} top={'30%'} left={'43%'} onEnd={handleEnd}/>
-                </div>
-            </div>
-            </>
-            }
+            <button onClick={}>Spam Click</button>
         </div>
     );
 }
-export default SpamClickkjndomp;
+
+export default spamclicktext;

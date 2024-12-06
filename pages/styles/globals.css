@@ -876,3 +876,16 @@ body {
   transition: left 0.3s ease;
   z-index: 1;
 }
+
+.pbatterie{
+  background-image: url("../../public/photo/battery.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.gbatterie{
+  background-image: url("../../public/photo/batterie-grosse.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
