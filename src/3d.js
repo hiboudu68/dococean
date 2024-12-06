@@ -176,6 +176,8 @@ const ThreeScene = ({ onWin }) => {
           }
 
           onWin("spot4", "victory");
+
+          return;
         }
       }
     };
