@@ -67,3 +67,122 @@ body {
 .play-button:focus {
   outline: none;
 }
+/* Conteneur principal */
+.settings-container {
+  background-image: url("/photo/setting.png"); /* Image de fond */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: relative;
+  padding: 20px;
+  font-family: "Arial", sans-serif; /* Police moderne */
+}
+
+/* Bouton Accueil */
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 12px 25px;
+  background-color: #ffde0a;
+  color: white;
+  border: 3px solid #fcca01;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #fcca01;
+}
+
+.settings-content {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 40px;
+  border-radius: 15px;
+  width: 350px;
+  text-align: center;
+  margin-top: 60px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.settings-content h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #ffde0a;
+  font-weight: bold;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.toggle-label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.toggle-switch {
+  width: 60px;
+  height: 30px;
+  border-radius: 25px;
+  background-color: #ccc;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-switch.active {
+  background-color: #4caf50;
+}
+
+.toggle-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: left 0.3s ease;
+}
+
+.toggle-circle.active {
+  left: 33px;
+}
+
+.status-text {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fcca01;
+}
+
+.validate-button {
+  margin-top: 30px;
+  padding: 12px 25px;
+  background-color: #ffde0a;
+  color: white;
+  border: 3px solid #fcca01;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.validate-button:hover {
+  background-color: #fcca01;
+}
