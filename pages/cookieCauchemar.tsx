@@ -55,7 +55,8 @@ export default function CookieCauchemar() {
     };
 
     const stopCookieQTE = () => {
-        if (Math.abs(previousQteGoal - count) <= 5) {
+        console.log(Math.abs(previousQteGoal - count))
+        if (Math.abs(previousQteGoal - count) - 5 <= 5) {
             let choice = Math.round(Math.random());
             console.log(choice)
             switch (choice) {
