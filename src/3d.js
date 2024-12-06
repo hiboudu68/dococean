@@ -14,12 +14,9 @@ const ThreeScene = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     mountRef.current.appendChild(renderer.domElement);
 
-    // camera setup
-    // camera.position.set(6, 4, 6);
-    // camera.lookAt(0, 0, 0);
-
     // light setup
-    const light = new THREE.AmbientLight(0xffffff, 1); // could be directional light too
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(-1, 2, 4);
     scene.add(light);
 
     // physics setup
@@ -31,7 +28,7 @@ const ThreeScene = () => {
       mass: 0, // this body is static : it doesn't move
       shape: new CANNON.Plane(),
     });
-    groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0); // horizontal plane (like real life)
+    groundBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0); // horizontal plane
     world.addBody(groundBody);
 
     // ground texture
@@ -39,137 +36,171 @@ const ThreeScene = () => {
     const groundTexture = textureLoader.load('/models/waves.jpg');
     groundTexture.wrapS = THREE.RepeatWrapping;
     groundTexture.wrapT = THREE.RepeatWrapping;
-    groundTexture.repeat.set(100, 100); // repeats the texture to create an "infinite" effect
+    groundTexture.repeat.set(100, 100);
 
-    // create the ground material using the texture
     const groundMaterial = new THREE.MeshStandardMaterial({
       map: groundTexture,
-      side: THREE.DoubleSide, // Both sides visible
+      side: THREE.DoubleSide,
     });
 
-    // use a large plane for the ground
-    const groundGeometry = new THREE.PlaneGeometry(1000, 1000); // Large dimensions to simulate infinity
+    const groundGeometry = new THREE.PlaneGeometry(1000, 1000); // large dimensions
     const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
-    groundMesh.rotation.x = -Math.PI / 2; // Horizontal orientation
+    groundMesh.rotation.x = -Math.PI / 2;
     scene.add(groundMesh);
 
     scene.background = new THREE.Color(0x87ceeb); // sky blue
 
     // load models
     const loader = new GLTFLoader();
-    let trashBody, clawBody;
-    let trashBoxHelper, clawBoxHelper; 
-    let trashModel, clawModel;
+    let trashBody, clawBody, trashCanBody;
+    let trashBoxHelper, clawBoxHelper, trashCanBoxHelper;
+    let trashModel, clawModel, trashCanModel;
     let isGrabbing = false;
+    let isTrashRemoved = false; // flag to track if trash is removed
 
-      // first model : trash
-      loader.load(
-        '/models/milkJug.glb',
-        (gltf) => {
-          trashModel = gltf.scene;
-          trashModel.position.set(0, 0, 0); // on the ground
-          scene.add(trashModel);
-  
-          // creating a physics body for the model
-          trashBody = new CANNON.Body({
-            mass: 1,
-            shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)),
-            position: new CANNON.Vec3(0, 0, 0),
-          });
-          world.addBody(trashBody);
-  
-          // create a BoxHelper to outline the trash body
-          trashBoxHelper = new THREE.BoxHelper(trashModel, 0x00ff00); // green box for trash
-          scene.add(trashBoxHelper);
-  
-          const animate = () => {
-            requestAnimationFrame(animate);
-  
-            world.step(1 / 60); // update physics world : this is the physics engine's tick
-  
-            // sync the model's position and rotation with the physics body
-            trashModel.position.copy(trashBody.position);
-            trashModel.quaternion.copy(trashBody.quaternion);
-  
-            // sync the BoxHelper's position and rotation with the model
-            trashBoxHelper.update();
-  
-            renderer.render(scene, camera);
-          };
-  
-          animate();
-        },
-        undefined,
-        (error) => {
-          console.error('Error loading model:', error);
-        }
-      );
-  
-    
-    
 
-    // second model : claw
+    /* 
+      THIS IS VERY MESSY CODE.
+    */
+
+    // Load trash model
     loader.load(
-      'models/heart.glb',
+      '/models/trash.glb',
+      (gltf) => {
+        trashModel = gltf.scene;
+        trashModel.position.set(5, 1, 0);
+        trashModel.scale.set(2, 2, 2);
+        scene.add(trashModel);
+
+        // creating a physics body for the trash model
+        trashBody = new CANNON.Body({
+          mass: 1,
+          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1)),
+          position: new CANNON.Vec3(5, 1, 0),
+        });
+        world.addBody(trashBody);
+
+        // create a BoxHelper to outline the trash model
+        trashBoxHelper = new THREE.BoxHelper(trashModel, 0x00ff00); // green box
+        scene.add(trashBoxHelper);
+      },
+      undefined,
+      (error) => {
+        console.error('Error loading trash model:', error);
+      }
+    );
+
+    // load claw model
+    loader.load(
+      '/models/claw.glb',
       (gltf) => {
         clawModel = gltf.scene;
-        clawModel.position.set(0, 10, 0); // above the ground
+        clawModel.position.set(5, 7, 0);
+        clawModel.scale.set(0.1, 0.1, 0.1);
         scene.add(clawModel);
 
-        // creating a physics body for the model
+        // creating a physics body for the claw
         clawBody = new CANNON.Body({
-          mass: 0, 
-          shape: new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5)), 
-          position: new CANNON.Vec3(0, 5, 0),
+          mass: 0, // static body
+          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1)),
+          position: new CANNON.Vec3(5, 7, 0),
         });
         world.addBody(clawBody);
 
-        // create a BoxHelper to outline the claw's body
-        clawBoxHelper = new THREE.BoxHelper(clawModel, 0xff0000); // red box for claw
+        // create a BoxHelper for the claw's body
+        clawBoxHelper = new THREE.BoxHelper(clawModel, 0xff0000); // red box
         scene.add(clawBoxHelper);
-
-        const animate = () => {
-          requestAnimationFrame(animate);
-
-          world.step(1 / 60); 
-
-          clawModel.position.copy(clawBody.position);
-          clawModel.quaternion.copy(clawBody.quaternion);
-          clawBoxHelper.update();
-
-          renderer.render(scene, camera);
-        };
-
-        animate();
       },
       undefined,
       (error) => {
         console.error('Error loading hand model:', error);
       }
-    )
+    );
 
-     // handle user input for moving the hand
-     const keyState = {};
-     window.addEventListener('keydown', (event) => {
-       keyState[event.code] = true;
-        
-        if (event.code === 'KeyG' && trashBody.position.distanceTo(clawBody.position) < 1) { // ONLY when the hand is close to the trash !!!!!! 
-          isGrabbing = true;
-        }
-     });
-     window.addEventListener('keyup', (event) => {
-       keyState[event.code] = false;
+    // load trash can model
+    loader.load(
+      '/models/trashCan.glb',
+      (gltf) => {
+        trashCanModel = gltf.scene;
+        trashCanModel.position.set(-8, 0, -3);
+        trashCanModel.scale.set(0.01, 0.01, 0.01);
+        scene.add(trashCanModel);
 
-        if (event.code === 'KeyG') {
-          isGrabbing = false;
+        // creating a physics body for the trash can
+        trashCanBody = new CANNON.Body({
+          mass: 0, // static body
+          shape: new CANNON.Box(new CANNON.Vec3(1, 1, 1)),
+          position: new CANNON.Vec3(-8, 0, -3),
+        });
+        world.addBody(trashCanBody);
+
+        // create a BoxHelper for the trash can's body
+        trashCanBoxHelper = new THREE.BoxHelper(trashCanModel, 0xffff00); // yellow box
+        scene.add(trashCanBoxHelper);
+      },
+      undefined,
+      (error) => {
+        console.error('Error loading trash can model:', error);
+      }
+    );
+
+    // collision detection function
+    const checkCollision = () => {
+      if (trashBody && trashCanBody) {
+        const distance = trashBody.position.distanceTo(trashCanBody.position);
+        if (distance < 3) { // collision threshold          
+          // ensure the program doesnt crash when the trash is removed
+          if (!isTrashRemoved) {
+            if (trashModel) {
+              scene.remove(trashModel); 
+            }
+            if (trashBody) {
+              world.removeBody(trashBody);
+            }
+
+            isTrashRemoved = true;
+          }
+
+          // display a message to the user
+          const message = document.createElement('div');
+          message.style.position = 'absolute';
+          message.style.width = 100;
+          message.style.height = 100;
+          message.style.backgroundColor = 'white';
+          message.style.color = 'black';
+          message.style.fontSize = '20px';
+          message.style.padding = '20px';
+          message.style.top = '50%';
+          message.style.left = '50%';
+          message.style.transform = 'translate(-50%, -50%)';
+          message.innerHTML = 'Trash thrown in the trash can!';
+          document.body.appendChild(message);
         }
-     });
-     
-     const moveHand = () => {
+      }
+    };
+
+    // handle user input for moving the hand
+    const keyState = {};
+    window.addEventListener('keydown', (event) => {
+      keyState[event.code] = true;
+      if (event.code === 'KeyG' && trashBody && trashBody.position.distanceTo(clawBody.position) < 2) { // grabbing only when close
+        console.log('Grabbing the trash');
+        isGrabbing = true;
+      }
+    });
+
+    window.addEventListener('keyup', (event) => {
+      keyState[event.code] = false;
+      if (event.code === 'KeyG') {
+        isGrabbing = false;
+      }
+    });
+
+    const moveHand = () => {
       if (clawBody) {
-        if(clawBody.position.y < 1) clawBody.position.y = 1; // don't let the claw go below the ground
+        if (clawBody.position.y < 1) clawBody.position.y = 1; // don't let the claw go below the ground
 
-        // apply user input to clawBody (physics body), NOT the clawModel (visual model)
+        // apply user input to clawBody (physics body)
         if (keyState['ArrowUp']) clawBody.position.z -= 0.1; // forward
         if (keyState['ArrowDown']) clawBody.position.z += 0.1; // backward
         if (keyState['ArrowLeft']) clawBody.position.x -= 0.1; // left
@@ -183,24 +214,22 @@ const ThreeScene = () => {
     const update = () => {
       requestAnimationFrame(update);
       moveHand();
+      checkCollision();
 
-      if(isGrabbing && trashBody && clawBody) {
+      if (isGrabbing && trashBody && clawBody && !isTrashRemoved) {
         trashBody.position.copy(clawBody.position);
-        
-        if(isGrabbing) {
-          trashBody.position.y -= 1;
-          trashBody.velocity.set(0, 0, 0);
-          trashBody.angularVelocity.set(0, 0, 0);
-        }
+        trashBody.position.y -= 1;
+        trashBody.velocity.set(0, 0, 0);
+        trashBody.angularVelocity.set(0, 0, 0);
       }
 
       // sync the trash model's position and rotation with the physics body
-      if (trashModel && trashBody) {
+      if (trashModel && trashBody && !isTrashRemoved) {
         trashModel.position.copy(trashBody.position);
         trashModel.quaternion.copy(trashBody.quaternion);
 
         // update the BoxHelper to match the physics body
-        trashBoxHelper.update();
+        trashBoxHelper?.update();
       }
 
       // sync the claw model's position and rotation with the physics body
@@ -209,18 +238,17 @@ const ThreeScene = () => {
         clawModel.quaternion.copy(clawBody.quaternion);
 
         // update the BoxHelper to match the physics body
-        clawBoxHelper.update();
+        clawBoxHelper?.update();
       }
 
-      // also update the physics world
-      world.step(1 / 60);
+      world.step(1 / 60); // update physics world : this is the physics engine's tick
 
       renderer.render(scene, camera);
     };
-    
+
     update();
-    camera.position.set(0, 3, 7);
-   
+    camera.position.set(0, 5, 8);
+
     return () => {
       mountRef.current.removeChild(renderer.domElement);
       window.removeEventListener('keydown', (event) => {
