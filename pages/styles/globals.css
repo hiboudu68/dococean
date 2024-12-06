@@ -184,3 +184,46 @@ body {
 .validate-button:hover {
   background-color: #fcca01;
 }
+
+/* Cookies */
+.cookie-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.increment-counter {
+  width: 120px;
+  height: 40px;
+  background-color: #ccc;
+}
+
+.progress-bar {
+  width: 200px;
+  height: 40px;
+  background-color: white;
+  opacity: 1;
+    position: relative;
+    display: none;
+}
+
+.progress-bar-progess{
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background-color: green;
+  position: absolute;
+  z-index: 2;
+}
+
+.progress-bar-goal{
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 5%;
+  background-color: orange;
+  z-index: 1;
+}
