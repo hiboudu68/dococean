@@ -1,14 +1,23 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Index from "./pages/index";
+import Settings from "./pages/Settings";
+import Info from "./pages/Info";
+import Play from "./pages/play";
 import logo from './logo.svg';
 import './App.css';
 import SpamClickkjndomp from './SpamClickkjndomp';
 import './assets/fonts.css';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-        <SpamClickkjndomp />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/info" element={<Info />} />
+        <Route path="/play" element={<Play />} />
+      </Routes>
+    </Router>
   );
 }
-
-export default App;

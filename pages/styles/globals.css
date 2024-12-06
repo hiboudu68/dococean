@@ -1,0 +1,308 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "icons.css";
+@import "typeface-jolly-lodger";
+
+:root {
+  font-family: Inter, sans-serif;
+  font-feature-settings: "liga" 1, "calt" 1;
+  --mainColor: #7c3aec;
+  --mainColor50: #7b3aec59;
+  --whiteBg: #ece8fd;
+  --textColor: rgb(129, 129, 129);
+}
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family: InterVariable, sans-serif;
+  }
+}
+.bebas-neue-regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+body {
+  background-color: #f4f2fe;
+  overflow-x: hidden;
+}
+* {
+  border: none;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  margin: 0;
+  overflow: hidden;
+}
+
+.play-button-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.play-button {
+  font-family: "Jolly Lodger", sans-serif;
+  padding: 15px 40px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #ffde0a;
+  border: 3px solid #fcca01;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 46px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.play-button:hover {
+  background-color: #fcca01;
+  border-color: #ffde0a;
+}
+
+.play-button:focus {
+  outline: none;
+}
+/* Conteneur principal */
+.settings-container {
+  background-image: url("/photo/setting.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: relative;
+  padding: 20px;
+  font-family: "Arial", sans-serif;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 12px 25px;
+  background-color: #ffde0a;
+  color: white;
+  border: 3px solid #fcca01;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #fcca01;
+}
+
+.settings-content {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 40px;
+  border-radius: 15px;
+  width: 350px;
+  text-align: center;
+  margin-top: 60px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.settings-content h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #ffde0a;
+  font-weight: bold;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.toggle-label {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.toggle-switch {
+  width: 60px;
+  height: 30px;
+  border-radius: 25px;
+  background-color: #ccc;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-switch.active {
+  background-color: #4caf50;
+}
+
+.toggle-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: left 0.3s ease;
+}
+
+.toggle-circle.active {
+  left: 33px;
+}
+
+.status-text {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fcca01;
+}
+
+.validate-button {
+  margin-top: 30px;
+  padding: 12px 25px;
+  background-color: #ffde0a;
+  color: white;
+  border: 3px solid #fcca01;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.validate-button:hover {
+  background-color: #fcca01;
+}
+
+.carousel-container {
+  background-image: url("/photo/setting.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 20px;
+  font-family: "Arial", sans-serif;
+  overflow: hidden;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 12px 25px;
+  background-color: #ffde0a;
+  color: white;
+  border: 3px solid #fcca01;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #fcca01;
+}
+
+.carousel-content {
+  text-align: center;
+  padding: 40px;
+  border-radius: 15px;
+  width: 350px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.player-info h2 {
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.carousel-images {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.arrow-button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.arrow-button.left {
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-right: 25px solid #ffde0a;
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.arrow-button.right {
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 25px solid #ffde0a;
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.player-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 3px solid #fcca01;
+}
+
+.validate-button {
+  padding: 12px 25px;
+  background-color: #ffde0a;
+  color: white;
+  border: 3px solid #fcca01;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.validate-button:hover {
+  background-color: #fcca01;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
