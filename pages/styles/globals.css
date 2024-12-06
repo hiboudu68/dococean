@@ -578,6 +578,10 @@ body {
   background-size: cover;
 }
 
+.container_maze.one{
+  background-image: url('../../public/photo/Posidonie.png');
+}
+
 .container_start{
   position: relative;
   width: 800px;
