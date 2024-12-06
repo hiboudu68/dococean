@@ -4,5 +4,12 @@
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
   "/play": "pages/play.js",
+<<<<<<< HEAD
   "/settings": "pages/settings.js"
+=======
+  "/player/[name]": "pages/player/[name].js",
+  "/": "pages/index.js",
+  "/settings": "pages/settings.js",
+  "/info": "pages/info.js"
+>>>>>>> ab28ec4f295188f15fa16f53d9b821185048bc93
 }
