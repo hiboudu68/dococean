@@ -3,58 +3,53 @@ import "./Maze.css";
 
 const Maze = () => {
   const [gameOver, setGameOver] = useState(false);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [started, setStarted] = useState(false);
 
   // Fonction déclenchée si le joueur touche un mur
   const handleCollision = () => {
     setGameOver(true);
   };
 
-  const handleMouseMove = (e) => {
-    setCursorPosition({ x: e.clientX, y: e.clientY });
-  };
-
-  useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
+  const handleStart = () => {
+    setStarted(true);
+  }
 
   const Win = () => {
     alert("You win!");
   }
 
   return (
-    <div className="container_maze">
-      <div className="start"></div>
-      <div className="wall" onMouseEnter={handleCollision}></div>
-      <div className="wall1" onMouseEnter={handleCollision}></div>
-      <div className="wall2" onMouseEnter={handleCollision}></div>
-      <div className="wall3" onMouseEnter={handleCollision}></div>
-      <div className="wall4" onMouseEnter={handleCollision}></div>
-      <div className="wall5" onMouseEnter={handleCollision}></div>
-      <div className="wall6" onMouseEnter={handleCollision}></div>
-      <div className="finish" onMouseEnter={Win}></div>
-      {gameOver && (
-        <div className="screamer">
-          You Lose
+    <div className="maze_game">
+      {!started &&
+        <div className="container_start">
+          <button onClick={handleStart}>Clique moi</button>
+          <h1>Echape le labyrinthe</h1>
         </div>
-      )}
-      <div
-        style={{
-          position: "absolute",
-          top: `${cursorPosition.y}px`,
-          left: `${cursorPosition.x}px`,
-          width: "20px",
-          height: "20px",
-          backgroundColor: "blue",
-          borderRadius: "50%",
-          pointerEvents: "none",
-          transform: "translate(-50%, -50%)"
-        }}
-      />
+      }
+      {started &&
+        <div className="container_maze" onMouseLeave={handleCollision}>
+          <div className="wall zero" onMouseEnter={handleCollision}></div>
+          <div className="wall one" onMouseEnter={handleCollision}></div>
+          <div className="wall two" onMouseEnter={handleCollision}></div>
+          <div className="wall three" onMouseEnter={handleCollision}></div>
+          <div className="wall four" onMouseEnter={handleCollision}></div>
+          <div className="wall five" onMouseEnter={handleCollision}></div>
+          <div className="wall six" onMouseEnter={handleCollision}></div>
+          <div className="wall seven" onMouseEnter={handleCollision}></div>
+          <div className="wall eight" onMouseEnter={handleCollision}></div>
+          <div className="wall nine" onMouseEnter={handleCollision}></div>
+          <div className="wall ten" onMouseEnter={handleCollision}></div>
+          <div className="wall eleven" onMouseEnter={handleCollision}></div>
+          <div className="wall twelve" onMouseEnter={handleCollision}></div>
+          <div className="wall thirteen" onMouseEnter={handleCollision}></div>
+          <div className="finish" onMouseEnter={Win}></div>
+          {gameOver && (
+            <div className="screamer">
+              You Lose
+            </div>
+          )}
+        </div>
+      }
     </div>
   );
 };

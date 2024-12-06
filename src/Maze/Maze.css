@@ -1,74 +1,197 @@
 .start {
-    top: 0px;
-    left: 0px;
-  }
+  top: 0px;
+  left: 0px;
+}
 
-  .wall {
-    position: absolute;
-    background-color: red;
-    width: 200px;
-    height: 20px;
-    top: 50px;
-    left: 0px;
-  }
+.wall{
+  position: absolute;
+  background-image: url('../assets/trash.png');
+  background-repeat: repeat;
+  background-size: 40px;
+}
 
-  .wall1 {
-    position: absolute;
-    background-color: red;
-    width: 20px;
-    height: 100px;
-    top: 50px;
-    left: 200px;
-  }
+.wall.zero{
+  width: 200px;
+  height: 40px;
+  top: 50px;
+  left: 0px;
+}
 
-  .wall2 {
-    position: absolute;
-    background-color: red;
-    width: 20px;
-    height: 400px;
-    top: 0px;
-    left: 250px;
-  }
-  
-  .start, .finish {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: green;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-  }
-  
-  .finish {
-    bottom: 10px;
-    right: 10px;
-  }
-  
-  .screamer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-  }
-  .screamer img {
-    width: 50%;
-  }
-  
-  .container_maze {
-    position: relative;
-    width: 400px;
-    height: 400px;
-    background-color: #f0f0f0;
-    margin: 50px auto;
-    border: 2px solid #000;
-    background-image: url('../assets/ocean.png');
-  }
+.wall.one {
+  width: 40px;
+  height: 300px;
+  top: 50px;
+  left: 200px;
+}
+
+.wall.two {
+  width: 40px;
+  height: 560px;
+  top: 0px;
+  left: 270px;
+}
+
+.wall.three{
+  width: 240px;
+  height: 40px;
+  top: 350px;
+  left: 00px;
+}
+
+.wall.four {
+  width: 230px;
+  height: 40px;
+  top: 520px;
+  left: 40px;
+}
+
+.wall.five{
+  width: 200px;
+  height: 60px;
+  top: 425px;
+  left: 40px;
+}
+
+.wall.six {
+  width: 40px;
+  height: 200px;
+  bottom: 0px;
+  left: 340px;
+}
+
+.wall.seven {
+  width: 40px;
+  height: 340px;
+  bottom: 240px;
+  left: 340px;
+}
+
+.wall.eight{
+  width: 400px;
+  height: 40px;
+  top: 20px;
+  left: 380px;
+}
+
+.wall.nine{
+  width: 40px;
+  height: 500px;
+  top: 20px;
+  right: 20px;
+}
+
+.wall.ten{
+  width: 50px;
+  height: 40px;
+  top: 500px;
+  right: 10px;
+}
+
+.wall.eleven{
+  width: 40px;
+  height: 450px;
+  bottom: 0px;
+  left: 430px;
+}
+
+.wall.twelve{
+  width: 40px;
+  height: 490px;
+  bottom: 50px;
+  left: 520px;
+}
+
+
+.wall.thirteen{
+  width: 40px;
+  height: 450px;
+  bottom: 0px;
+  left: 620px;
+}
+
+.start,
+.finish {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: green;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.finish {
+  bottom: 10px;
+  right: 10px;
+}
+
+.screamer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.screamer img {
+  width: 50%;
+}
+
+.container_maze {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  background-color: #f0f0f0;
+  margin: 50px auto;
+  border: 2px solid #000;
+  background-image: url('../assets/ocean.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container_start{
+  position: relative;
+  width: 800px;
+  height: 600px;
+  background-color: #f0f0f0;
+  margin: 50px auto;
+  border: 2px solid #000;
+}
+
+.container_start button{
+  top: 0px;
+  left: 0px;
+  width: 50px;
+  height: 50px;
+  background-color: #f0f0f0;
+  border: 1px solid #000;
+  position: absolute;
+  transition: all 1.5s;
+}
+
+.container_start button:hover{
+  background-color: #000;
+  color: #f0f0f0;
+  transform: rotate(1080deg);
+  transition: all 1.5s;
+}
+
+.container_start h1{
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  text-align: center;
+}
+
+.maze_game{
+  background-color: #55AAC9;
+}
