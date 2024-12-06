@@ -1,13 +1,22 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three'; // for 3D rendering
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'; // for glTF & glb models
 import * as CANNON from 'cannon-es'; // for physics
-import { on } from 'events';
 
 const ThreeScene = ({ onWin }) => {
   const mountRef = useRef(null);
 
+  const [started, setStarted] = useState(false);
+  const handleStart = () => {
+    setStarted(true);
+  }
+
   useEffect(() => {
+    if (!started || !mountRef.current) {
+      // skip initialization if the game hasn't started or the mountRef is not ready
+      return;
+    }
+
     // scene setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -20,7 +29,7 @@ const ThreeScene = ({ onWin }) => {
     // light setup
     const light = new THREE.DirectionalLight(0xffffff, 1);
     light.position.set(0, 10, 0); // top light
-    light.castShadow = true; // Enable shadows for this light
+    light.castShadow = true; // enable shadows
     light.shadow.camera.left = -50;
     light.shadow.camera.right = 50;
     light.shadow.camera.top = 50;
@@ -77,7 +86,7 @@ const ThreeScene = ({ onWin }) => {
       THIS IS SOME VERY MESSY CODE.
     */
 
-    // Load trash model
+    // load trash model
     loader.load(
       '/models/trash.glb',
       (gltf) => {
@@ -208,8 +217,8 @@ const ThreeScene = ({ onWin }) => {
         if (keyState['ArrowDown']) clawBody.position.z += 0.1; // backward
         if (keyState['ArrowLeft']) clawBody.position.x -= 0.1; // left
         if (keyState['ArrowRight']) clawBody.position.x += 0.1; // right
-        if (keyState['Space']) clawBody.position.y -= 0.1; // down
-        if (keyState['ShiftLeft']) clawBody.position.y += 0.1; // up
+        if (keyState['KeyS']) clawBody.position.y -= 0.1; // down
+        if (keyState['KeyW']) clawBody.position.y += 0.1; // up
       }
     };    
 
@@ -252,6 +261,80 @@ const ThreeScene = ({ onWin }) => {
     update();
     camera.position.set(0, 5, 8);
 
+    // add button to reset the game (bring the trash and claw back to their initial positions)
+    const resetButton = document.createElement('button');
+    resetButton.textContent = 'Reset';
+    resetButton.style.position = 'absolute';
+    resetButton.style.top = '50px';
+    resetButton.style.left = '100px';
+    resetButton.style.zIndex = '100';
+    resetButton.style.fontSize = '20px';
+    resetButton.addEventListener('click', () => {
+      if (trashModel && !scene.children.includes(trashModel)) {
+        scene.add(trashModel);
+      }
+      if (trashBody && !world.bodies.includes(trashBody)) {
+        world.addBody(trashBody);
+      }
+    
+      isTrashRemoved = false;
+      trashBody.position.set(5, 1, 0);
+      trashBody.velocity.set(0, 0, 0);
+      trashBody.angularVelocity.set(0, 0, 0);
+      
+      trashModel.position.copy(trashBody.position);
+      trashModel.quaternion.copy(trashBody.quaternion);
+    
+      clawBody.position.set(0, 7, 0);
+      clawBody.velocity.set(0, 0, 0);
+      clawBody.angularVelocity.set(0, 0, 0);
+    
+      clawModel.position.copy(clawBody.position);
+      clawModel.quaternion.copy(clawBody.quaternion);
+    });
+    mountRef.current.appendChild(resetButton);
+
+    // add controls to top left
+    const controls = document.createElement('div');
+    controls.innerHTML = `  
+      <h1>Contrôles</h1>
+      <ul>
+        <li> W: Monter</li>
+        <li> S: Descendre</li>
+        <li> Flèche haut: Avancer vers l'avant</li>
+        <li> Flèche bas: Reculer</li>
+        <li> Flèche gauche: Aller à gauche</li>  
+        <li> Flèche droite: Aller à droite</li>
+        <li> G: Attraper (Maintenir pressé)</li>
+      </ul>
+      <p>Dès que tu as attrapé le déchet, ramène-le à la poubelle pour gagner !</p>
+      <p>Si tu es bloqué, clique sur le bouton "Reset" pour recommencer.</p>
+    `;
+    controls.style.position = 'absolute';
+    controls.style.top = '100px';
+    controls.style.right = '100px';
+    controls.style.zIndex = '100';
+    controls.style.fontSize = '20px';
+    controls.style.color = 'black';
+    controls.style.backgroundColor = 'white';
+    controls.style.border = '1px solid black';
+    controls.style.display = 'none';
+    mountRef.current.appendChild(controls);
+
+    // add controls button
+    const controlsButton = document.createElement('button');
+    controlsButton.textContent = 'Contrôles'; 
+    controlsButton.style.position = 'absolute';
+    controlsButton.style.top = '50px';
+    controlsButton.style.right = '100px';
+    controlsButton.style.zIndex = '100';
+    controlsButton.style.fontSize = '20px';
+    controlsButton.addEventListener('click', () => {
+      controls.style.display = controls.style.display === 'none' ? 'block' : 'none';
+    });
+    mountRef.current.appendChild(controlsButton);
+
+
     return () => {
       if (mountRef.current) {
         mountRef.current.removeChild(renderer.domElement);
@@ -267,9 +350,44 @@ const ThreeScene = ({ onWin }) => {
 
     };
     
-  }, []);
+  }, [started]);
 
-  return <div ref={mountRef} />;
+  return (
+    <div className="3d_game">
+    {!started &&
+      <div className="container_start">
+        <button onClick={handleStart}>Clique moi</button>
+        <div class="instructions">
+          <article>
+            <header>
+              <h1>Les Boutons du Corps Humain : Attention à l'Alerte Plastique ! 🚨🌊
+              </h1>
+            </header>
+            <section>
+              <p>Imagine que ton corps est couvert de boutons à cause d’une mauvaise habitude… Eh bien, nos océans ont aussi leurs boutons : ce sont les îles de plastique. Ces amas géants de déchets flottants, certains aussi grands qu’un pays, sont les symptômes d’un océan malade. 🗑️🌍
+              </p>
+            </section>
+            <section>
+              <p>Ces « boutons » se forment à cause de millions de tonnes de plastique jetées dans la nature chaque année. Les courants marins les rassemblent en d’énormes zones où le plastique flotte, se décompose en minuscules morceaux (les microplastiques) et devient impossible à nettoyer complètement. 🚮
+              </p>
+            </section>
+            <section>
+              <p>Le problème ? Les animaux marins, comme les tortues, les poissons ou les oiseaux, confondent souvent le plastique avec de la nourriture. Résultat : ils s’empoisonnent, et ce poison peut finir dans nos assiettes. 😨🐠
+              </p>
+            </section>
+            <footer>
+              <p>Ces îles de plastique ne disparaîtront pas toutes seules, alors à nous de changer les choses : moins de plastique, plus de recyclage, et surtout moins de déchets dans la nature. Ensemble, faisons la chasse à ces « boutons » pour un océan en meilleure santé ! 💪🌊</p>
+            </footer>
+          </article>
+        </div>
+      </div>
+    }
+    {started &&
+      <div ref={mountRef} />
+    }
+  </div>
+  );
+
 };
 
 export default ThreeScene;
